@@ -1,6 +1,9 @@
+"use client";
+
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { scrollMarginTop } from "@/theme/sx";
 
 type SectionProps = {
   id: string;
@@ -18,7 +21,7 @@ export default function Section({ id, title, subtitle, children, ariaLabel }: Se
       aria-label={ariaLabel ?? title}
       sx={{
         py: { xs: 8, md: 12 },
-        scrollMarginTop: "80px",
+        scrollMarginTop,
       }}
     >
       <Container maxWidth="lg">

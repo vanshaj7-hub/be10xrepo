@@ -168,8 +168,8 @@ function createAppTheme(mode: "light" | "dark") {
   return createTheme(options);
 }
 
-export const lightTheme = createAppTheme("light");
-export const darkTheme = createAppTheme("dark");
+const lightTheme = createAppTheme("light");
+const darkTheme = createAppTheme("dark");
 
 export function getTheme(mode: "light" | "dark") {
   return mode === "light" ? lightTheme : darkTheme;

@@ -7,7 +7,6 @@ import { STORAGE_KEY } from "@/theme/tokens";
 type ColorModeContextValue = {
   mode: ColorMode;
   toggleColorMode: () => void;
-  setColorMode: (mode: ColorMode) => void;
 };
 
 const ColorModeContext = createContext<ColorModeContextValue | undefined>(undefined);
@@ -40,18 +39,11 @@ export function ColorModeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.setAttribute("data-color-mode", mode);
   }, [mode, mounted]);
 
-  const setColorMode = useCallback((nextMode: ColorMode) => {
-    setModeState(nextMode);
-  }, []);
-
   const toggleColorMode = useCallback(() => {
     setModeState((prev) => (prev === "light" ? "dark" : "light"));
   }, []);
 
-  const value = useMemo(
-    () => ({ mode, toggleColorMode, setColorMode }),
-    [mode, toggleColorMode, setColorMode],
-  );
+  const value = useMemo(() => ({ mode, toggleColorMode }), [mode, toggleColorMode]);
 
   return <ColorModeContext.Provider value={value}>{children}</ColorModeContext.Provider>;
 }

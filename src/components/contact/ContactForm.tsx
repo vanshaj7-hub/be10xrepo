@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
@@ -8,8 +9,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import type { ContactApiResponse } from "@/data/portfolio";
+import { formMessages } from "@/data/portfolio";
 import { contactFormSchema, type ContactFormValues } from "@/lib/validation";
 
 export default function ContactForm() {
@@ -42,17 +44,17 @@ export default function ContactForm() {
         body: JSON.stringify(data),
       });
 
-      const result = (await response.json()) as { error?: string; message?: string };
+      const result = (await response.json()) as ContactApiResponse;
 
       if (!response.ok) {
-        throw new Error(result.error ?? "Something went wrong. Please try again.");
+        throw new Error(result.error ?? formMessages.errorDefault);
       }
 
       setSubmitStatus("success");
       reset();
     } catch (error) {
       setSubmitStatus("error");
-      setErrorMessage(error instanceof Error ? error.message : "Something went wrong.");
+      setErrorMessage(error instanceof Error ? error.message : formMessages.errorDefault);
     }
   };
 
@@ -90,7 +92,6 @@ export default function ContactForm() {
             helperText={errors.message?.message}
           />
 
-          {/* Honeypot field — hidden from users */}
           <TextField
             {...register("website")}
             label="Website"
@@ -108,7 +109,7 @@ export default function ContactForm() {
 
           {submitStatus === "success" && (
             <Alert severity="success" sx={{ mt: 2 }}>
-              Thanks for reaching out! I&apos;ll get back to you soon.
+              {formMessages.success}
             </Alert>
           )}
 
@@ -126,7 +127,7 @@ export default function ContactForm() {
             sx={{ mt: 3 }}
             startIcon={isSubmitting ? <CircularProgress size={18} color="inherit" /> : undefined}
           >
-            {isSubmitting ? "Sending..." : "Send Message"}
+            {isSubmitting ? formMessages.sending : formMessages.send}
           </Button>
         </Box>
       </CardContent>

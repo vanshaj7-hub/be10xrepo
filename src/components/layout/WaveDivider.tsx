@@ -1,19 +1,15 @@
+"use client";
+
 import Box from "@mui/material/Box";
 
-type WaveDividerProps = {
-  flip?: boolean;
-};
-
-export default function WaveDivider({ flip = false }: WaveDividerProps) {
+export default function WaveDivider() {
   return (
     <Box
       sx={{
         position: "relative",
         width: "100%",
         lineHeight: 0,
-        transform: flip ? "rotate(180deg)" : "none",
-        mt: flip ? 0 : -1,
-        mb: flip ? -1 : 0,
+        mt: -1,
       }}
       aria-hidden="true"
     >

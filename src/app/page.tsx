@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
@@ -10,7 +9,7 @@ import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
-    <Box component="main">
+    <main>
       <Header />
       <Hero />
       <About />
@@ -19,6 +18,6 @@ export default function Home() {
       <Experience />
       <Contact />
       <Footer />
-    </Box>
+    </main>
   );
 }

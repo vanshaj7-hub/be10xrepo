@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import ThemeRegistry from "@/theme/ThemeRegistry";
 import { siteConfig } from "@/data/portfolio";
+import { STORAGE_KEY } from "@/theme/tokens";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,6 +46,8 @@ export const metadata: Metadata = {
   },
 };
 
+const colorModeScript = `(function(){try{var k=${JSON.stringify(STORAGE_KEY)};var s=localStorage.getItem(k);var m=s==="light"||s==="dark"?s:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-color-mode",m)}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -52,6 +56,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${plusJakarta.variable}`}>
+        <Script id="color-mode-init" strategy="beforeInteractive">
+          {colorModeScript}
+        </Script>
         <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>

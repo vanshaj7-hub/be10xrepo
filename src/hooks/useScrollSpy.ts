@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function useActiveSection(sectionIds: string[]) {
+export function useScrollSpy(sectionIds: string[]) {
   const [activeSection, setActiveSection] = useState(sectionIds[0] ?? "");
 
   useEffect(() => {
@@ -34,30 +34,4 @@ export function useActiveSection(sectionIds: string[]) {
   }, [sectionIds]);
 
   return activeSection;
-}
-
-export function useReducedMotion() {
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mediaQuery.matches);
-
-    const handler = (event: MediaQueryListEvent) => {
-      setReducedMotion(event.matches);
-    };
-
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, []);
-
-  return reducedMotion;
-}
-
-export function scrollToSection(href: string) {
-  const id = href.replace("#", "");
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
 }

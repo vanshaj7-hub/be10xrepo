@@ -4,14 +4,14 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Section from "@/components/layout/Section";
-import { experiences } from "@/data/portfolio";
+import { experiences, sectionCopy } from "@/data/portfolio";
 
 export default function Experience() {
   return (
     <Section
       id="experience"
-      title="Experience"
-      subtitle="Five years of shaping products across fintech, SaaS, and health"
+      title={sectionCopy.experience.title}
+      subtitle={sectionCopy.experience.subtitle}
     >
       <Stack spacing={0} sx={{ position: "relative" }}>
         {experiences.map((exp, index) => (

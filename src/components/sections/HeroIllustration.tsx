@@ -3,7 +3,7 @@
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import { useReducedMotion } from "@/hooks/useActiveSection";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { netflixColors } from "@/theme/tokens";
 
 const MotionG = motion.create("g");

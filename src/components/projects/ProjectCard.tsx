@@ -10,6 +10,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import type { Project } from "@/data/portfolio";
+import { cardHoverShadow } from "@/theme/sx";
 
 type ProjectCardProps = {
   project: Project;
@@ -18,19 +19,7 @@ type ProjectCardProps = {
 
 export default function ProjectCard({ project, onClick }: ProjectCardProps) {
   return (
-    <Card
-      sx={{
-        height: "100%",
-        transition: "transform 0.25s ease, box-shadow 0.25s ease",
-        "&:hover": {
-          transform: "translateY(-6px)",
-          boxShadow: (theme) =>
-            theme.palette.mode === "light"
-              ? "0 12px 32px rgba(229, 9, 20, 0.14)"
-              : "0 12px 40px rgba(229, 9, 20, 0.2)",
-        },
-      }}
-    >
+    <Card sx={{ height: "100%", ...cardHoverShadow({ intensity: "md", lift: 6 }) }}>
       <CardActionArea
         onClick={onClick}
         sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "stretch" }}

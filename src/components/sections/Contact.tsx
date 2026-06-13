@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -9,11 +10,10 @@ import IconButton from "@mui/material/IconButton";
 import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import ContactForm from "@/components/contact/ContactForm";
 import Section from "@/components/layout/Section";
 import SocialIconButton from "@/components/layout/SocialIconButton";
-import ContactForm from "@/components/contact/ContactForm";
-import { siteConfig, socialLinks, testimonials } from "@/data/portfolio";
+import { sectionCopy, siteConfig, socialLinks, testimonials } from "@/data/portfolio";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
@@ -28,7 +28,11 @@ export default function Contact() {
   };
 
   return (
-    <Section id="contact" title="Contact" subtitle="Let's build something meaningful together">
+    <Section
+      id="contact"
+      title={sectionCopy.contact.title}
+      subtitle={sectionCopy.contact.subtitle}
+    >
       <Grid container spacing={4}>
         <Grid size={{ xs: 12, md: 7 }}>
           <ContactForm />
@@ -73,7 +77,7 @@ export default function Contact() {
 
       <Box sx={{ mt: 8 }}>
         <Typography variant="h6" sx={{ mb: 3, textAlign: "center" }}>
-          What collaborators say
+          {sectionCopy.testimonials.heading}
         </Typography>
         <Grid container spacing={3}>
           {testimonials.map((item) => (

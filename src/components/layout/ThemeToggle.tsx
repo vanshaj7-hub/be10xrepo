@@ -31,7 +31,7 @@ export default function ThemeToggle() {
       />
       <Switch
         checked={isDark}
-        onChange={toggleColorMode}
+        onChange={() => toggleColorMode()}
         size="small"
         inputProps={{
           "aria-label": isDark ? "Switch to light mode" : "Switch to dark mode",

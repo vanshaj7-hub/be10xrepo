@@ -6,30 +6,23 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import Section from "@/components/layout/Section";
-import { useReducedMotion } from "@/hooks/useActiveSection";
-import { aboutContent, siteConfig } from "@/data/portfolio";
-
-const MotionBox = motion.create(Box);
+import { aboutContent, sectionCopy, siteConfig } from "@/data/portfolio";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { MotionBox, slideInView } from "@/lib/motion";
 
 export default function About() {
   const reducedMotion = useReducedMotion();
 
   return (
-    <Section id="about" title="About" subtitle={aboutContent.subtitle}>
+    <Section
+      id="about"
+      title={sectionCopy.about.title}
+      subtitle={sectionCopy.about.subtitle}
+    >
       <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
         <Grid size={{ xs: 12, md: 5 }}>
-          <MotionBox
-            {...(reducedMotion
-              ? {}
-              : {
-                  initial: { opacity: 0, x: -24 },
-                  whileInView: { opacity: 1, x: 0 },
-                  viewport: { once: true, margin: "-80px" },
-                  transition: { duration: 0.6, ease: "easeOut" as const },
-                })}
-          >
+          <MotionBox {...slideInView("left", 0, reducedMotion)}>
             <Box
               sx={{
                 position: "relative",
@@ -47,7 +40,7 @@ export default function About() {
               }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80"
+                src={siteConfig.avatarUrl}
                 alt={`Portrait of ${siteConfig.name}`}
                 fill
                 sizes="(max-width: 900px) 100vw, 400px"
@@ -62,16 +55,7 @@ export default function About() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 7 }}>
-          <MotionBox
-            {...(reducedMotion
-              ? {}
-              : {
-                  initial: { opacity: 0, x: 24 },
-                  whileInView: { opacity: 1, x: 0 },
-                  viewport: { once: true, margin: "-80px" },
-                  transition: { duration: 0.6, delay: 0.1, ease: "easeOut" as const },
-                })}
-          >
+          <MotionBox {...slideInView("right", 0.1, reducedMotion)}>
             <Typography
               variant="body1"
               color="text.secondary"

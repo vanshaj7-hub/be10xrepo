@@ -1,11 +1,11 @@
 "use client";
 
-import Grid from "@mui/material/Grid2";
 import { useState } from "react";
+import Grid from "@mui/material/Grid2";
 import Section from "@/components/layout/Section";
 import ProjectCard from "@/components/projects/ProjectCard";
 import ProjectModal from "@/components/projects/ProjectModal";
-import { projects } from "@/data/portfolio";
+import { projects, sectionCopy } from "@/data/portfolio";
 import type { Project } from "@/data/portfolio";
 
 export default function Projects() {
@@ -15,8 +15,8 @@ export default function Projects() {
     <>
       <Section
         id="projects"
-        title="Projects"
-        subtitle="Selected work spanning research, strategy, and visual design"
+        title={sectionCopy.projects.title}
+        subtitle={sectionCopy.projects.subtitle}
       >
         <Grid container spacing={3}>
           {projects.map((project) => (

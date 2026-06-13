@@ -9,26 +9,21 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { motion } from "framer-motion";
-import WaveDivider from "@/components/layout/WaveDivider";
 import ScrollHint from "@/components/layout/ScrollHint";
+import WaveDivider from "@/components/layout/WaveDivider";
 import HeroIllustration from "@/components/sections/HeroIllustration";
-import { useReducedMotion, scrollToSection } from "@/hooks/useActiveSection";
 import { siteConfig } from "@/data/portfolio";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { fadeInScale, fadeUp, MotionBox } from "@/lib/motion";
+import { scrollToSection } from "@/lib/scroll";
+import { brandGlow, brandShadow, brandShadowHover, scrollMarginTop } from "@/theme/sx";
+import { navLinks } from "@/theme/tokens";
 
-const MotionBox = motion.create(Box);
+const projectsHref = navLinks.find((link) => link.href === "#projects")?.href ?? "#projects";
+const contactHref = navLinks.find((link) => link.href === "#contact")?.href ?? "#contact";
 
 export default function Hero() {
   const reducedMotion = useReducedMotion();
-
-  const fadeUp = (delay = 0) =>
-    reducedMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 28 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.65, delay, ease: "easeOut" as const },
-        };
 
   return (
     <Box
@@ -40,12 +35,11 @@ export default function Hero() {
         overflow: "hidden",
         pt: { xs: 4, md: 6 },
         pb: 0,
-        scrollMarginTop: "80px",
+        scrollMarginTop,
         color: "text.primary",
         bgcolor: "background.default",
       }}
     >
-      {/* Cinematic red glow — Netflix-style */}
       <Box
         sx={{
           position: "absolute",
@@ -54,7 +48,7 @@ export default function Hero() {
           width: 320,
           height: 320,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(229, 9, 20, 0.14) 0%, transparent 70%)",
+          background: brandGlow("sm"),
           pointerEvents: "none",
         }}
       />
@@ -66,10 +60,7 @@ export default function Hero() {
           width: 360,
           height: 360,
           borderRadius: "50%",
-          background: (theme) =>
-            theme.palette.mode === "dark"
-              ? "radial-gradient(circle, rgba(229, 9, 20, 0.18) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(178, 7, 16, 0.08) 0%, transparent 70%)",
+          background: brandGlow("md"),
           pointerEvents: "none",
         }}
       />
@@ -77,7 +68,7 @@ export default function Hero() {
       <Container maxWidth="lg" sx={{ position: "relative", pb: { xs: 6, md: 8 } }}>
         <Grid container spacing={{ xs: 6, md: 4 }} alignItems="center">
           <Grid size={{ xs: 12, md: 6 }}>
-            <MotionBox {...fadeUp(0)}>
+            <MotionBox {...fadeUp(0, reducedMotion)}>
               <Stack direction="row" alignItems="center" spacing={1.5} sx={{ mb: 3 }}>
                 <Box
                   sx={{
@@ -91,7 +82,7 @@ export default function Hero() {
                     bgcolor: "background.paper",
                     border: 1,
                     borderColor: "divider",
-                    boxShadow: "0 2px 12px rgba(229, 9, 20, 0.2)",
+                    boxShadow: brandShadow("sm"),
                   }}
                 >
                   <ShieldOutlinedIcon sx={{ color: "primary.main", fontSize: 28 }} />
@@ -124,7 +115,7 @@ export default function Hero() {
               </Stack>
             </MotionBox>
 
-            <MotionBox {...fadeUp(0.08)}>
+            <MotionBox {...fadeUp(0.08, reducedMotion)}>
               <Typography
                 variant="h1"
                 component="h1"
@@ -151,7 +142,7 @@ export default function Hero() {
               </Typography>
             </MotionBox>
 
-            <MotionBox {...fadeUp(0.16)}>
+            <MotionBox {...fadeUp(0.16, reducedMotion)}>
               <Typography
                 variant="body1"
                 color="text.secondary"
@@ -166,7 +157,7 @@ export default function Hero() {
               </Typography>
             </MotionBox>
 
-            <MotionBox {...fadeUp(0.24)}>
+            <MotionBox {...fadeUp(0.24, reducedMotion)}>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} alignItems={{ sm: "center" }}>
                 <MotionBox
                   whileHover={reducedMotion ? {} : { scale: 1.03, y: -2 }}
@@ -178,14 +169,12 @@ export default function Hero() {
                     color="primary"
                     size="large"
                     endIcon={<ArrowForwardIcon />}
-                    onClick={() => scrollToSection("#projects")}
+                    onClick={() => scrollToSection(projectsHref)}
                     sx={{
                       px: 3,
                       py: 1.25,
-                      boxShadow: "0 4px 16px rgba(229, 9, 20, 0.35)",
-                      "&:hover": {
-                        boxShadow: "0 6px 24px rgba(229, 9, 20, 0.45)",
-                      },
+                      boxShadow: brandShadow("md"),
+                      "&:hover": { boxShadow: brandShadowHover("md") },
                     }}
                   >
                     View Work
@@ -195,7 +184,7 @@ export default function Hero() {
                 <Button
                   variant="outlined"
                   size="large"
-                  onClick={() => scrollToSection("#contact")}
+                  onClick={() => scrollToSection(contactHref)}
                   sx={{
                     px: 3,
                     py: 1.25,
@@ -232,15 +221,7 @@ export default function Hero() {
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <MotionBox
-              {...(reducedMotion
-                ? {}
-                : {
-                    initial: { opacity: 0, scale: 0.95 },
-                    animate: { opacity: 1, scale: 1 },
-                    transition: { duration: 0.8, delay: 0.2, ease: "easeOut" as const },
-                  })}
-            >
+            <MotionBox {...fadeInScale(0.2, reducedMotion)}>
               <HeroIllustration />
             </MotionBox>
           </Grid>

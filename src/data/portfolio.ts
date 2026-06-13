@@ -1,39 +1,25 @@
-export type Project = {
-  id: string;
-  title: string;
-  role: string;
-  timeline: string;
-  tags: string[];
-  summary: string;
-  coverImage: string;
-  problem: string;
-  process: string[];
-  outcomes: string[];
-  tools: string[];
-  images?: string[];
-  link?: string;
-};
+import type {
+  Experience,
+  FormMessages,
+  Project,
+  SectionCopy,
+  SiteConfig,
+  SkillCategory,
+  SocialLink,
+  Testimonial,
+} from "./portfolio.types";
 
-export type Experience = {
-  id: string;
-  company: string;
-  role: string;
-  period: string;
-  bullets: string[];
-};
-
-export type SkillCategory = {
-  id: string;
-  title: string;
-  skills: string[];
-};
-
-export type SocialLink = {
-  id: string;
-  label: string;
-  href: string;
-  icon: "linkedin" | "behance" | "dribbble" | "email";
-};
+export type {
+  ContactApiResponse,
+  Experience,
+  FormMessages,
+  Project,
+  SectionCopy,
+  SiteConfig,
+  SkillCategory,
+  SocialLink,
+  Testimonial,
+} from "./portfolio.types";
 
 export const siteConfig = {
   name: "Alex Morgan",
@@ -43,17 +29,53 @@ export const siteConfig = {
   email: "hello@alexmorgan.design",
   location: "San Francisco, CA",
   resumeUrl: "/resume.pdf",
-  avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80",
+  avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80",
   description:
     "Product Designer with 5 years of experience crafting user-centered digital products across fintech, SaaS, and consumer apps.",
-};
+} satisfies SiteConfig;
 
 export const aboutContent = {
-  subtitle: "Designing with empathy, shipping with craft.",
   bio: "I'm a Product Designer with 5 years of experience turning complex problems into intuitive, beautiful experiences. I work at the intersection of research, strategy, and visual design — partnering closely with product and engineering teams to ship work that users love and businesses value.",
   philosophy:
     "Great design is invisible until it isn't. I believe in validating early, iterating fast, and sweating the details that make products feel effortless.",
 };
+
+export function buildSectionCopy(experienceYears: number): SectionCopy {
+  return {
+    about: {
+      title: "About",
+      subtitle: "Designing with empathy, shipping with craft.",
+    },
+    skills: {
+      title: "Skills",
+      subtitle: "A toolkit built for discovery, design, and delivery",
+    },
+    projects: {
+      title: "Projects",
+      subtitle: "Selected work spanning research, strategy, and visual design",
+    },
+    experience: {
+      title: "Experience",
+      subtitle: `${experienceYears} years of shaping products across fintech, SaaS, and health`,
+    },
+    contact: {
+      title: "Contact",
+      subtitle: "Let's build something meaningful together",
+    },
+    testimonials: {
+      heading: "What collaborators say",
+    },
+  };
+}
+
+export const sectionCopy = buildSectionCopy(siteConfig.experienceYears);
+
+export const formMessages = {
+  success: "Thanks for reaching out! I'll get back to you soon.",
+  errorDefault: "Something went wrong. Please try again.",
+  sending: "Sending...",
+  send: "Send Message",
+} satisfies FormMessages;
 
 export const skillCategories: SkillCategory[] = [
   {
@@ -225,7 +247,7 @@ export const socialLinks: SocialLink[] = [
   },
 ];
 
-export const testimonials = [
+export const testimonials: Testimonial[] = [
   {
     id: "t1",
     quote:

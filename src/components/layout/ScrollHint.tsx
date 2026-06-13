@@ -4,7 +4,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import { motion } from "framer-motion";
-import { scrollToSection, useReducedMotion } from "@/hooks/useActiveSection";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { scrollToSection } from "@/lib/scroll";
 
 export default function ScrollHint() {
   const reducedMotion = useReducedMotion();
