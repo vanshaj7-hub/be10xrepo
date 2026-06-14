@@ -21,8 +21,12 @@ Copy `.env.example` to `.env.local` and fill in your values:
 | `CONTACT_TO_EMAIL` | Your email — receives form submissions |
 | `CONTACT_FROM_EMAIL` | Verified sender address in Resend (falls back to `onboarding@resend.dev` if omitted) |
 | `NEXT_PUBLIC_SITE_URL` | Production URL for Open Graph metadata (e.g. `https://yourdomain.com`) |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL (e.g. `https://xxxx.supabase.co`) |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase publishable key (`sb_publishable_...`) from Settings → API Keys |
 
 Without `RESEND_API_KEY` and `CONTACT_TO_EMAIL`, the contact form still works in development but logs submissions to the server console instead of sending email.
+
+When Supabase is configured, contact form submissions are saved to the `contact_submissions` table before optional email delivery.
 
 ## Editing content
 
@@ -56,8 +60,10 @@ src/
     sections/             # Page sections (Skills & Experience are server components)
   data/                   # portfolio.ts + portfolio.types.ts
   hooks/                  # useColorMode, useScrollSpy, useReducedMotion
-  lib/                    # motion, scroll, validation, escapeHtml
+  lib/                    # motion, scroll, validation, escapeHtml, supabase
   theme/                  # MUI themes, tokens, shared sx helpers
+supabase/
+  migrations/             # SQL migrations (apply via Supabase MCP or dashboard)
 public/
   images/                 # Optional local assets
   favicon.svg, og-image.svg
@@ -99,6 +105,19 @@ Shared utilities:
 - Framer Motion (subtle animations)
 - React Hook Form + Zod
 - Resend (contact email)
+- Supabase (contact form persistence)
+
+## Supabase setup
+
+This project connects to Supabase using the publishable key from your Cursor MCP configuration.
+
+1. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+2. Apply the migration in [`supabase/migrations/20250614000000_create_contact_submissions.sql`](supabase/migrations/20250614000000_create_contact_submissions.sql):
+   - **Via MCP:** Restart Cursor (Settings → Tools & MCP), then ask the agent to run `apply_migration` for the contact table.
+   - **Via dashboard:** Open Supabase → SQL Editor, paste the migration SQL, and run it.
+3. View submissions in Supabase → Table Editor → `contact_submissions`.
+
+**Cursor MCP config** (`.cursor/mcp.json`) should use separate `command` and `args` with `--apiUrl`, `--apiKey`, and `--schema`. For full database tooling (migrations, SQL, types), you can switch to the [hosted Supabase MCP](https://supabase.com/docs/guides/ai-tools/mcp) at `https://mcp.supabase.com/mcp?project_ref=YOUR_PROJECT_REF`.
 
 ## License
 
